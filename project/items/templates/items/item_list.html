@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Item List</title>
+</head>
+<body>
+    <h1>Items</h1>
+    <a href="{% url 'item_create' %}">Add Item</a>
+    <ul>
+        {% for item in items %}
+        <li>
+            {{ item.name }} - <a href="{% url 'item_update' item.pk %}">Edit</a> |
+            <a href="{% url 'item_delete' item.pk %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
