@@ -32,3 +32,11 @@ urlpatterns = [
     path('<int:pk>/update/', item_update, name='item_update'),
     path('<int:pk>/delete/', item_delete, name='item_delete'),
 ]
+
+
+urlpatterns = [
+    path('', read_items, name='read_items'),
+    path('create/', create_item, name='create_item'),
+    path('update/<int:pk>/', update_item, name='update_item'),
+    path('delete/<int:pk>/', delete_item, name='delete_item'),
+]

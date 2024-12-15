@@ -1,0 +1,33 @@
+{% extends 'items/base.html' %}
+
+{% block title %}Items List{% endblock %}
+
+{% block content %}
+<h1>Items List</h1>
+
+{% if items %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>
+                <a href="{% url 'update_item' item.id %}" class="btn">Edit</a>
+                <a href="{% url 'delete_item' item.id %}" class="btn btn-delete">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No items found. <a href="{% url 'create_item' %}">Add one!</a></p>
+{% endif %}
+{% endblock %}

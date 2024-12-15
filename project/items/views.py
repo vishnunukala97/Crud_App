@@ -2,28 +2,34 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 from .forms import ItemForm
 
-def item_list(request):
+def read_items(request):
     items = Item.objects.all()
-    return render(request, '../templates/items/item_list.html', {'items': items})
+    return render(request, 'items/read.html', {'items': items})
 
-def item_create(request):
-    form = ItemForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('item_list')
-    return render(request, 'items/item_form.html', {'form': form})
+def create_item(request):
+    if request.method == 'POST':
+        form = ItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('read_items')
+    else:
+        form = ItemForm()
+    return render(request, 'items/create.html', {'form': form})
 
-def item_update(request, pk):
+def update_item(request, pk):
     item = get_object_or_404(Item, pk=pk)
-    form = ItemForm(request.POST or None, instance=item)
-    if form.is_valid():
-        form.save()
-        return redirect('item_list')
-    return render(request, 'items/item_form.html', {'form': form})
+    if request.method == 'POST':
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('read_items')
+    else:
+        form = ItemForm(instance=item)
+    return render(request, 'items/update.html', {'form': form})
 
-def item_delete(request, pk):
+def delete_item(request, pk):
     item = get_object_or_404(Item, pk=pk)
-    if request.method == "POST":
+    if request.method == 'POST':
         item.delete()
-        return redirect('item_list')
-    return render(request, 'items/item_confirm_delete.html', {'item': item})
+        return redirect('read_items')
+    return render(request, 'items/delete.html', {'item': item})
