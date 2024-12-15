@@ -26,13 +26,6 @@ from django.urls import path
 from django.urls import path
 from items.views import *
 
-urlpatterns = [
-    path('', item_list, name='item_list'),
-    path('create/', item_create, name='item_create'),
-    path('<int:pk>/update/', item_update, name='item_update'),
-    path('<int:pk>/delete/', item_delete, name='item_delete'),
-]
-
 
 urlpatterns = [
     path('', read_items, name='read_items'),
